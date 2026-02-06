@@ -1,5 +1,7 @@
 import pytest
 from playwright.async_api import async_playwright
+
+from a_test_automation.ai_client import ChatbotClient, ChatbotClientConfig
 from a_test_automation.config import get_settings
 
 
@@ -7,6 +9,12 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption("--env", action="store", default="dev")
     parser.addoption("--browser", action="store", default="chromium")
     parser.addoption("--headless", action="store_true", default=False)
+    parser.addoption(
+        "--system-prompt",
+        action="store",
+        default="",
+        help="System prompt used by AI tests. If empty, SYSTEM_PROMPT env var is used.",
+    )
 
 
 @pytest.fixture(scope="session")
@@ -27,6 +35,35 @@ def headless(pytestconfig: pytest.Config) -> bool:
 @pytest.fixture(scope="session")
 def settings(env_name: str):
     return get_settings(env_name)
+
+
+@pytest.fixture(scope="session")
+def system_prompt(pytestconfig: pytest.Config) -> str:
+    from_env = pytestconfig.getoption("--system-prompt")
+    if from_env:
+        return from_env
+
+    import os
+
+    return os.getenv("SYSTEM_PROMPT", "")
+
+
+@pytest.fixture(scope="session")
+def ai_client(settings) -> ChatbotClient:
+    if not settings.chatbot_api_url:
+        pytest.skip("CHATBOT_API_URL is not configured. Configure it in .env.<env>.")
+
+    return ChatbotClient(
+        ChatbotClientConfig(
+            endpoint=settings.chatbot_api_url,
+            api_key=settings.chatbot_api_key,
+            api_key_header=settings.chatbot_api_key_header,
+            api_key_prefix=settings.chatbot_api_key_prefix,
+            system_prompt_field=settings.chatbot_system_prompt_field,
+            question_field=settings.chatbot_question_field,
+            answer_field=settings.chatbot_answer_field,
+        ),
+    )
 
 
 @pytest.fixture

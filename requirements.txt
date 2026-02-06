@@ -4,3 +4,5 @@ pytest==8.3.4
 pytest-asyncio==0.25.3
 python-dotenv==1.0.1
 requests==2.32.3
+deepeval>=1.2.0,<2.0.0
+pytest-xdist==3.6.1
