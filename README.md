@@ -12,7 +12,7 @@ Simple, extendable test automation framework using Python, Playwright (async), p
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
 python -m playwright install
 ```
 
@@ -43,11 +43,14 @@ allure serve allure-results
 ```
 .
 ├── bitbucket-pipelines.yml
-├── requirements.txt
+├── pyproject.toml
+├── src
+│   └── a_test_automation
+│       ├── config.py
+│       └── pages
+│           └── login_page.py
 ├── tests
 │   ├── api
-│   ├── pages
-│   ├── ui
-│   └── utils
+│   └── ui
 └── .env.dev
 ```

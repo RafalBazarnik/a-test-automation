@@ -1,5 +1,5 @@
 import pytest
-from tests.pages.login_page import LoginPage
+from a_test_automation.pages.login_page import LoginPage
 
 
 @pytest.mark.asyncio

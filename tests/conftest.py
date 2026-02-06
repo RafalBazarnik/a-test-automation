@@ -1,6 +1,6 @@
 import pytest
 from playwright.async_api import async_playwright
-from tests.utils.config import get_settings
+from a_test_automation.config import get_settings
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
