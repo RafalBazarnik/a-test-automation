@@ -1,6 +1,6 @@
 # a-test-automation
 
-Simple, extendable test automation framework using Python, Playwright (async), pytest, requests, and dotenv. Includes a sample UI page object and an API test, plus Bitbucket Pipelines and Allure reporting.
+Simple, extendable test automation framework using Python, Playwright (async), pytest, requests, and dotenv. Includes a sample UI page object and an API test, plus Bamboo Specs and Allure reporting.
 
 ## Prerequisites
 
@@ -28,6 +28,7 @@ pytest --env dev
 
 ```bash
 pytest --env dev --browser chromium
+pytest --env dev --browser chromium --device "iPhone 13"
 pytest --env test --browser webkit --headless
 ```
 
@@ -42,7 +43,8 @@ allure serve allure-results
 
 ```
 .
-├── bitbucket-pipelines.yml
+├── bamboo-specs
+│   └── bamboo.yaml
 ├── pyproject.toml
 ├── src
 │   └── a_test_automation

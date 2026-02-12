@@ -1,0 +1,28 @@
+---
+version: 2
+plan:
+  project-key: ATA
+  key: AUTO
+  name: a-test-automation
+
+stages:
+  - Test:
+      jobs:
+        - Run tests
+
+Run tests:
+  docker:
+    image: python:3.12
+  tasks:
+    - script:
+        interpreter: SHELL
+        scripts:
+          - python -m pip install --upgrade pip
+          - pip install -r requirements.txt
+          - python -m playwright install --with-deps chromium
+          - pytest --env test --browser chromium --device "iPhone 13" --headless --alluredir=allure-results
+  artifacts:
+    - name: allure-results
+      location: allure-results
+      pattern: "**/*"
+      shared: true
