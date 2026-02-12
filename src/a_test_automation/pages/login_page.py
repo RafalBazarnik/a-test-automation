@@ -8,6 +8,9 @@ class LoginPage:
     async def login(self, username: str, password: str) -> None:
         await self.page.fill("#username", username)
         await self.page.fill("#password", password)
+        await self.submit()
+
+    async def submit(self) -> None:
         await self.page.click("button[type='submit']")
 
     async def flash_message(self) -> str:
