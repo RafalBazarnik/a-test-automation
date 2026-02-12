@@ -1,12 +1,2 @@
-image: python:3.12
-
-pipelines:
-  default:
-    - step:
-        name: Test
-        caches:
-          - pip
-        script:
-          - pip install -r requirements.txt
-          - python -m playwright install --with-deps chromium
-          - pytest --env test --browser chromium --headless --alluredir=allure-results
+# Bitbucket Pipelines has been replaced by Bamboo specs.
+# See bamboo-specs/bamboo.yaml
