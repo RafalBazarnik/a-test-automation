@@ -1,6 +1,6 @@
 # a-test-automation
 
-Simple, extendable test automation framework using Python, Playwright (async), pytest, requests, and dotenv. Includes a sample UI page object and an API test, plus Bitbucket Pipelines and Allure reporting.
+Simple, extendable test automation framework using Python, Playwright (async), pytest, requests, and dotenv. Includes sample UI, API, and performance (Locust) tests, plus Bitbucket Pipelines and Allure reporting.
 
 ## Prerequisites
 
@@ -31,6 +31,22 @@ pytest --env dev --browser chromium
 pytest --env test --browser webkit --headless
 ```
 
+## Running API performance tests (Locust)
+
+```bash
+# CLI / headless
+API_BASE_URL=https://jsonplaceholder.typicode.com \
+locust -f tests/performance/locustfile.py --headless -u 10 -r 2 -t 1m
+
+# Web UI
+API_BASE_URL=https://jsonplaceholder.typicode.com \
+locust -f tests/performance/locustfile.py
+```
+
+Notes:
+- `LOCUST_HOST` has priority over `API_BASE_URL` when both are provided.
+- Default host is `https://jsonplaceholder.typicode.com`.
+
 ## Allure reports
 
 ```bash
@@ -51,6 +67,8 @@ allure serve allure-results
 │           └── login_page.py
 ├── tests
 │   ├── api
+│   ├── performance
+│   │   └── locustfile.py
 │   └── ui
 └── .env.dev
 ```
